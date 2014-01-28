@@ -9,8 +9,8 @@ var uNotify = {
 			'success': 	'alert alert-success'
 		},
 		dismiss:{
-			markup:'<button class = "btn btn-xs btn-default notify-dismiss"></button>',
-			selector:'.notify-dismiss',
+			markup:'<button class = "btn btn-xs btn-default unotify-dismiss"></button>',
+			selector:'.unotify-dismiss',
 			text: 'OK',
 			addContent:function(content){
 				this.text(content);
@@ -23,9 +23,9 @@ var uNotify = {
 			markup: '<div></div>',
 		},
 		wrapper:{
-			markup: '<div id = "notify-wrapper"></div>',
+			markup: '<div id = "unotify-wrapper"></div>',
 			parent: 'body',
-			selector: '#notify-wrapper',
+			selector: '#unotify-wrapper',
 			style: 'position:fixed;top:20px;right:20px;'
 		},
 		message:{
