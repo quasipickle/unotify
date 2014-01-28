@@ -1,4 +1,6 @@
-notify
+uNotify
 ======
 
-Highly customizable Javascript library for Growl-like notifications
+Highly customizable jQuery library for Growl-like notifications
+
+[Documentation here](http://quasipickle.github.io/unotify/)
