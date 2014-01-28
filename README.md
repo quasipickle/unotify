@@ -1,4 +1,4 @@
-notify
+uNotify
 ======
 
 Highly customizable jQuery library for Growl-like notifications
