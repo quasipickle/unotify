@@ -1,1 +1,1096 @@
-Hello world
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			uNotify
+		</title>
+		<link rel = "stylesheet" type = "text/css" href = "http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+		<link rel = "stylesheet" type = "text/css" href = "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+		<link rel = "stylesheet" type = "text/css" href = "prism.css" />
+		<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/animate.css/3.0.0/animate.min.css">
+		<link rel = "stylesheet" type = "text/css" href="docs.css" />
+		<script src = "http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src = "unotify.js"></script>
+		<script src = "prism.js"></script>
+		<script src = "docs.js"></script>
+	</head>
+	<body>
+		<nav id = "menu">
+			<i class = "fa fa-bars fa-2x"></i>
+			<nav>
+				<ul class="list-unstyled">
+					<li><a href = "#usage">Usage</a></li>
+					<li>
+						<a href = "#options">Options</a>
+						<ul>
+							<li>
+								<a href = "#options-events">Events</a>
+							</li>
+							<li>
+								<a href = "#options-defaults">Defaults</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href = "#examples">Examples</a>
+					</li>
+					<li>
+						<a href = "#examples">Styling</a>
+					</li>
+				</ul>
+			</nav>
+		</nav>
+		<div class="container">
+			<!--
+				Title
+			-->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="page-header">
+						<h1>
+							uNotify
+							<p>
+								Highly customizable javascript library for Growl-like notifications.
+							</p>
+						</h1>
+					</div>
+				</div>
+			</div>
+			<!--
+				Download
+			-->
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="text-center lead">
+						<a href = "https://raw2.github.com/quasipickle/notify/master/notify.js">Download</a> | <a href = "https://github.com/quasipickle/notify/tree/master">Github</a>
+					</div>
+					<div class="text-center">
+						Requires jQuery
+					</div>
+				</div>
+			</div>
+			<!--
+				Intro
+			-->
+			<div class="row">
+				<div class="col-xs-12">
+					<h3>
+						Why do we need another notify library?
+					</h3>
+					<p>
+						<em>We</em> likely don't, but <em>I</em> do.  Existing libraries codified too much of the composition of the notification element, making it difficult or impossible to change without re-writing the library - which causes havoc when updating said library.
+					</p>
+					<p>
+						uNotify is my attempt at making a simple notification library that gives the developer as much customization as possible external to the library.  You can customize pretty much every aspect of how a notification behaves, but you are also exposed to the complexity that customization requires.
+					</p>
+					<p>
+						<button id = "ex-1-info" class = "btn btn-info">Click me, I fade away</button>
+						<button id = "ex-1-danger" class = "btn btn-danger">Click me, I demand attention</button>
+					</p>
+				</div>
+			</div>
+			<!--
+				Usage
+			-->
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 id = "usage">
+						Usage
+					</h3>
+					<p>
+						<h5>
+							Configure library
+						</h5>
+						<pre><code class = "language-javascript">Notify.setDefaults({Configuration object});</code></pre>
+					</p>
+					<p>
+						<h5>
+							Create notification
+						</h5>
+						<pre><code class = "language-javascript">Notify.notify('Type of message','Text of message',[Configuration object]);</code></pre>
+					</p>
+				</div>
+			</div>
+
+			<!--
+				Options
+			-->
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 id = "options">
+						Options
+					</h3>
+					<p>
+						Most options can be passed in an object to both <code class = "language-javascript">setDefaults()</code> and <code class = "language-javascript">notify()</code>.  When passed to <code class = "language-javascript">setDefaults()</code>, all future notifications will use the passed values as defaults.  When passed to <code class = "language-javascript">notify()</code>, the passed values will only apply to the current notification.
+					</p>
+					<div>
+						<p>
+							If configuring globally, it might just be easier to directly set those defaults.  For example, if you want to set the default text that appears in the dismiss button: 
+						</p>
+						<div class="row">
+							<div class="col-xs-6">
+								it may be easier to:
+								<pre><code class="language-javascript">uNotify.defaults.dismiss.text = 'Okay';</code></pre>		
+							</div>
+							<div class="col-xs-6">
+								rather than:
+						<pre><code class="language-javascript">uNotify.setDefaults({
+	dismiss:{
+		text: 'Okay'
+	}
+});</code></pre>		
+							</div>
+						</div>
+					</div>
+						
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Option</th>
+								<th></th>
+								<th>Global<br />Config</th>
+								<th>Individual<br />Config</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id = "classes">
+								<td>
+									<code>classes</code>
+								</td>
+								<td>
+									<p>
+										Defines the different types of notifications that can be displayed. 
+									</p>
+									<p>
+										Object properties are strings that would get passed as the first argument to <code class = "language-javascript">Notify.notify()</code>.  Object values are the classes that get added to the notification.
+									</p>
+									<p>
+										The defaults of <code>info</code>,<code>danger</code>,<code>warning</code>, and <code>success</code> map to the corresponding Bootstrap 3 classes.
+									</p>
+
+									<h5>
+										Default
+									</h5>
+<pre><code class = "language-javascript">classes:{
+	'info': 	'alert alert-info',
+	'danger': 	'alert alert-danger',
+	'warning': 	'alert alert-warning',
+	'success': 	'alert alert-success'
+}</code></pre>
+								</td>
+								<td>Yes</td>
+								<td>Yes, but not ideal.</td>
+							</tr>
+							<tr>
+								<td>
+									<code>dismiss</code>
+								</td>
+								<td>
+									An object that defines the dismiss button options, if the message is dismissable (as opposed to automatically timing out)
+								</td>
+								<td>
+									Yes
+								</td>
+								<td>
+									Yes
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>markup</code>
+								</td>
+								<td>
+									The markup of the dismissing element.
+									<h5>
+										Default
+									</h5>
+<pre><code class = "language-css">&lt;button class = "btn btn-xs btn-default notify-dismiss"&gt;&lt;/button&gt;</code></pre>
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+							<tr id = "dismiss-selector">
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>selector</code>
+								</td>
+								<td>
+									The jQuery selector string used to find the dismissing element <em>within the context of the notification element</em>.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">.unotify-dismiss</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>text</code>
+								</td>
+								<td>
+									The text that should appear in the button.  Note that this string is always injected into the button, so don't put text in the <code>markup</code>.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">OK</code></pre>
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>addContent</code>
+								</td>
+								<td>
+									The function that gets run when injecting the dismiss element's content into the dismiss element.  The function is passed the content of the dismiss element as the sole argument. <code>this</code> refers to a jQuery object that represents the dismiss element.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(content){
+	this.text(content);
+}</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>add</code>
+								</td>
+								<td>
+									The function that gets run when inserting the dismiss element the notification element. The function is passed a jQuery object representing the dismiss element. <code>this</code> refers to a jQuery object that represents the notification element.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function($dismiss){
+	$dismiss.appendTo(this);
+}</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>notify</code>
+								</td>
+								<td>
+									Options for all notifications
+								</td>
+								<td>
+									Yes
+								</td>
+								<td>
+									Yes, but why?
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>markup</code>
+								</td>
+								<td>
+									The markup used to generate each notification.  Classes get added to this markup from the <code>classes</code> and <code>additional_classes</code> options, so the only classes that should get added here are those that need to be added to all notifications.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-css">&lt;div&gt;&lt;/div&gt;</code></pre>
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>wrapper</code>
+								</td>
+								<td>
+									All notifications get added to a wrapper element, to help place them on the page.  This object defines properties for that wrapper
+								</td>
+								<td>
+									Yes
+								</td>
+								<td>
+									No
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>markup</code>
+								</td>
+								<td>
+									The markup used for the wrapper.  Note the default has an ID set, as the wrapper must be unique.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-css">&lt;div id = "notify-wrapper"&gt;&lt;/div&gt;</code></pre>
+								</td>
+								<td>
+									
+								</td>
+								<td>
+									
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>parent</code>
+								</td>
+								<td>
+									A jQuery selector string used to select the element on the page into which the wrapper should be placed.
+									<h5>
+										Default
+									</h5>
+									<code>body</code>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>selector</code>
+								</td>
+								<td>
+									A jQuery selector string used to select the wrapper element.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-css">#unotify-wrapper</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>style</code>
+								</td>
+								<td>
+									Additional css declarations that get added to the wrapper markup.  This style isn't added to the default wrapper markup because you may want to change the style, but not the markup.  Both can be changed, though, if you want.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-css">position:fixed;
+top:20px;
+right:20px;</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>message</code>
+								</td>
+								<td>
+									Properties of the individual notification that can be passed to <code class = "language-javascript">notify()</code>
+								</td>
+								<td>
+									Yes
+								</td>
+								<td>
+									Yes
+								</td>
+							</tr>
+							<tr id = "additional_classes">
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>additional_classes</code>
+								</td>
+								<td>
+									Additional css declarations that get added to the notification element.  For example, you may want to add CSS classes for animating in via <a href = "http://daneden.github.io/animate.css/">Animate.css</a>.
+									<h5>
+										Default
+									</h5>
+									Empty string
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>additional_dismiss_classes</code>
+								</td>
+								<td>
+									Additional css declarations that get added to the dismiss element if it exists.  For example, this could be used to coordinate the look of the button to match the type of notification.
+									<h5>
+										Default
+									</h5>
+									Empty string
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>dismissable</code>
+								</td>
+								<td>
+									Whether or not this notification should be dismissable (ie: sticks around until user clicks the dismiss button)
+									<h5>
+										Default
+									</h5>
+									<code>false</code> (notifications disappear on their own by default)
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>timeout</code>
+								</td>
+								<td>
+									How long (in milliseconds) the notification should appear for. This is ignored if <code>dismissable</code> is set to <code>true</code>.
+									<h5>
+										Default
+									</h5>
+									<code>3000</code>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+							<tr>
+								<td class = "sub">
+									<i class = "fa fa-reply fa-rotate-180"></i><code>addContent</code>
+								</td>
+								<td>
+									The function used to inject the message into the notification.  The function is passed the content as the sole argument.  <code>this</code> refers to the jQuery object representing the notification element
+									<h5>
+										Default
+									</h5>
+<pre><code class = "language-javascript">function(content){
+	this.text(content);
+}</code></pre>
+								</td>
+								<td>
+								</td>
+								<td>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<h3 id = "options-events">
+						Event options
+					</h3>
+					<p>
+						The options object can also contain an <code>on</code> object that defines event listeners.  Due to the possible asynchronous nature of your event listeners, most listeners must trigger the event for the next listener.  The event chain is as follows:
+					</p>
+					<div class="row">
+						<div class="col-xs-6 col-md-3 col-md-offset-3">
+							<table class="table table-bordered table-flow">
+								<caption>
+									<h4>
+										When showing
+									</h4>
+								</caption>
+								<tbody>
+									<tr>
+										<td>
+											beforeShow.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											show.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											afterShow.unotify
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-xs-3">
+							<table class="table table-bordered table-flow">
+								<caption>
+									<h4>
+										When hiding
+									</h4>
+								</caption>
+								<tbody>
+									<tr>
+										<td>
+											dismiss.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+										<td>
+											timeout.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan = "2">
+											beforeHide.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan = "2">
+											hide.unotify
+											<p>
+												<i class = "fa fa-arrow-down"></i>
+											</p>
+										</td>
+									</tr>
+									<tr>
+										<td colspan = "2">
+											afterHide.unotify
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<p>
+						As you might guess, each function must trigger the next event in the chain.  Optionally, you can purposfuly <em>not</em> trigger the next event in order to cancel the action.
+					</p>
+					<p>
+						Each function will be called in the context of the notification element, so <code>this</code> will refer to the jQuery object that represents the notification element.
+					</p>
+					<p>
+						Any of these functions can be defined both globally and on a notification-by-notification basis
+					</p>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Option</th>
+								<th></th>
+								<th>Event to trigger</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<code>dismiss</code>
+								</td>
+								<td>
+									A function that gets run when the dismiss button is clicked, which can be used to trigger an animation or some other action.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.trigger('beforeHide.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">beforeHide.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>timeout</code>
+								</td>
+								<td>
+									A function that gets run when the timeout timer on the notification has elapsed.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){ 
+	this.trigger('beforeHide.unotify'); 
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">beforeHide.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>beforeShow</code>
+								</td>
+								<td>
+									A function that gets run before the notifcation begins to appear.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.trigger('show.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">show.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>show</code>
+								</td>
+								<td>
+									A function that gets run when the notification should start to appear.  This function is responsible for actually showing the notification.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.show();
+	this.trigger('afterShow.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">afterShow.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>afterShow</code>
+								</td>
+								<td>
+									A function that gets run after the notification is completely done appearing.  This function is responsible for triggering the beginning of the timeout timer.  If a notification is <code>dismissable</code>, the <code>startTimeout.unotify</code> event can still be triggered, it just won't have any effect.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.trigger('startTimeout.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">startTimeout.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>beforeHide</code>
+								</td>
+								<td>
+									A function that gets run before the notifcation begins to disappear
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.trigger('hide.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">hide.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>hide</code>
+								</td>
+								<td>
+									A function that gets run when the notification should start to disappear.  This function is responsible for actually hiding the notification.
+									<div class="alert alert-info alert-small">
+										Note how the callback function has <code>this</code> mapped to the <code>this</code> of the function.  This is because it is necessary to maintain the context inside the callback function.
+									</div>
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(afterHide){
+	this.slideUp(500,function(){
+		this.trigger('afterHide.unotify');
+	}.bind(this));
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">afterHide.unotify</code>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<code>afterShow</code>
+								</td>
+								<td>
+									A function that gets run after the notification is completely done appearing.  This function is responsible for triggering the beginning of the timeout timer.  If a notification is <code>dismissable</code>, the <code>startTimeout.unotify</code> event can still be triggered, it just won't have any effect.
+									<h5>
+										Default
+									</h5>
+									<pre><code class = "language-javascript">function(){
+	this.trigger('startTimeout.unotify');
+}</code></pre>
+								</td>
+								<td>
+									<code class="language-javascript">startTimeout.unotify</code>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 id = "options-defaults">
+						Option defaults
+					</h3>
+					<p>
+						Here are all the options and their defined defaults:
+					</p>
+					<pre><code class="language-javascript">defaults: {
+	classes:{
+		'info': 	'alert alert-info',
+		'danger': 	'alert alert-danger',
+		'warning': 	'alert alert-warning',
+		'success': 	'alert alert-success'
+	},
+	dismiss:{
+		markup:'<button class = "btn btn-xs btn-default unotify-dismiss"></button>',
+		selector:'.unotify-dismiss',
+		text: 'OK',
+		addContent:function(content){
+			this.text(content);
+		}
+	},
+	notify:{
+		markup: '<div></div>',
+	},
+	wrapper:{
+		markup: '<div id = "unotify-wrapper"></div>',
+		parent: 'body',
+		selector: '#unotify-wrapper',
+		style: 'position:fixed;top:20px;right:20px;'
+	},
+	message:{
+		additional_classes: '',
+		additional_dismiss_classes: '',
+		dismissable: false,
+		timeout: 3000,
+		addContent:function(content){
+			this.text(content);
+		}
+	},
+	on:{
+		beforeShow:function(){
+			this.trigger('show.unotify');
+		},
+		show:function(){
+			this.show();
+			this.trigger('afterShow.unotify');
+		},
+		afterShow:function(){
+			this.trigger('startTimeout.unotify');
+		},
+		dismiss:function(){
+			this.trigger('beforeHide.unotify'); 
+		},
+		timeout:function(){ 
+			this.trigger('beforeHide.unotify'); 
+		},
+		beforeHide:function(){
+			this.trigger('hide.unotify');
+		},
+		hide:function(afterHide){
+			this.slideUp(500,function(){
+				this.trigger('afterHide.unotify');
+			}.bind(this));
+		},
+		afterHide:function(){
+		}
+	}
+}</code></pre>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 id = "examples">
+						Examples
+					</h3>
+					<div class="alert alert-info">
+						<strong>Note:</strong> Examples that show how to set options globally use a duplicated uNotify object. Its not possible to have multiple different, concurrent global uNotify settings.
+					</div>
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>
+									Simple usage
+								</th>
+								<td>
+									<button id = "ex-2-info" class = "btn btn-default">Click me</button><br />
+									<button id = "ex-2-danger" class = "btn btn-default">And me</button><br />
+									<button id = "ex-2-success" class = "btn btn-default">And me</button><br />
+									<button id = "ex-2-warning" class = "btn btn-default">And me</button><br />
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-2-info").on('click',function(){
+	uNotify.notify('info','This is an info notification.');
+});
+$("#ex-2-danger").on('click',function(){
+	uNotify.notify('danger','This is a danger notification.');
+});
+$("#ex-2-success").on('click',function(){
+	uNotify.notify('success','This is a success notification.');
+});
+$("#ex-2-warning").on('click',function(){
+	uNotify.notify('warning','This is a warning notification.');
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Custom type
+								</th>
+								<td>
+									<button id = "ex-3" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">uNotify.setDefaults({
+	classes:{'purple':'alert alert-purple'}
+});
+$("#ex-3").on('click',function(){
+	uNotify.notify('purple','This is a purple notification.');
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Dismissable
+								</th>
+								<td>
+									<button id = "ex-4" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-4").on('click',function(){
+	uNotify.notify('danger','Click me to hide',{
+		message:{
+			dismissable: true
+		}
+	});
+});</code></pre>
+							<div class="alert alert-warning">
+								<p>
+									You'll note how the dismiss button is right smack up against the text.  To preserve full customizability, uNotify doesn't do anything automatically to give it space.  A simple declaration in your CSS like:
+									<pre><code class="language-css">.unotify-dismiss{ margin-left:10px; }</code></pre>
+									should give you something that looks a little more polished.
+									<button id = "ex-4-spaced" class = "btn btn-default btn-xs">Click for polish</button>
+								</p>
+								<p>
+									All subsequent dismissable examples will be spaced properly because it just looks better.  Remember you have to add that styling yourself though.
+								</p>
+							</div>
+							</tr>
+							<tr>
+								<th>
+									Dismissable with custom text
+								</th>
+								<td>
+									<button id = "ex-5" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-5").on('click',function(){
+	uNotify.notify('danger','Click me to hide',{
+		message:{
+			dismissable: true
+		},
+		dismiss:{
+			text:'Go away!'
+		}
+	});
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Dismissable with close button and close button content injection
+								</th>
+								<td>
+									<button id = "ex-6" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-6").on('click',function(){
+	uNotify.notify('success','Click me to hide',{
+		message:{
+			dismissable: true
+		},
+		dismiss:{
+			markup: '&lt;a class = "btn btn-default notify-dismiss"&gt;&lt;span&gt;&lt;/span&gt;!&lt;/button&gt;',
+			addContent:function(content){
+				this.find('span').text(content);
+			}
+		}
+	});
+});</code></pre>
+<div class="alert alert-info">
+	Note how the markup still has the <code>unotify-dismiss</code> class.  This class is used by uNotify to know what element to listen to.  If you wish to change that class, use the <a href = "#dismiss-selector"><code>selector</code></a> option.
+</div>
+							</tr>
+							<tr>
+								<th>
+									Dismissable with custom add function
+								</th>
+								<td>
+									<button id = "ex-65" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-65").on('click',function(){
+	uNotify.notify('success','Click me to hide',{
+		message:{
+			dismissable:true
+		},
+		dismiss:{
+			add:function($dismiss){
+				$dismiss.prependTo(this);
+			}
+		}
+	});
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Changing the timeout
+								</th>
+								<td>
+									<button id = "ex-7" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-7").on('click',function(){
+	uNotify.notify('success','Success is fleeting',{
+		message:{
+			timeout:500
+		}
+	});
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Changing where the notifications appear
+								</th>
+								<td>
+									<button id = "ex-8" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-8").on('click',function(){
+	uNotify.setDefaults({
+		wrapper:{
+			style: 'position:fixed;bottom:20px;right:20px;'
+		}
+	});
+	uNotify.notify('success','In the bottom corner');
+});</code></pre>
+							</tr>
+							<tr>
+								<th>
+									Adding additional classes at run-time
+								</th>
+								<td>
+									<button id = "ex-9" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-9").on('click',function(){
+	uNotify.notify('warning','Thick',{
+		message:{
+			additional_classes: 'heavy'
+		}
+	});
+});</code></pre>
+								<div class="alert alert-info">
+									<strong>Note:</strong> <code>.heavy</code> is just a class made up for this example - it's not part of Bootstrap 3 or uNotify.
+								</div>
+							</tr>
+							<tr>
+								<th>
+									Adding additional classes to the dismiss button at run-time
+								</th>
+								<td>
+									<button id = "ex-10" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<pre><code class="language-javascript">$("#ex-10").on('click',function(){
+	uNotify.notify('info','Colour co-ordinated',{
+		message:{
+			dismissable:true,
+			additional_dismiss_classes:'btn-info'
+		}
+	});
+});</code></pre>
+								<div class="alert alert-info">
+									<strong>Note:</strong> <code>.heavy</code> is just a class made up for this example - it's not part of Bootstrap 3 or uNotify.
+								</div>
+							</tr>
+							<tr>
+								<th>
+									Custom events
+								</th>
+								<td>
+									<button id = "ex-11" class = "btn btn-default">Click me</button>
+								</td>
+								<td>
+									<p>
+										This example uses <a href = "http://daneden.github.io/animate.css/">animate.css</a> animation classes to show and hide the notification, rather than jQuery.
+									</p>
+									<p>
+										jQuery is still used to shrink the space occupied by the notification, because animate.css just animates the element, it doesn't remove it
+									</p>
+									<pre><code class="language-javascript">$("#ex-11").on('click',function(){
+	uNotify.notify('success','Ta da!',{
+		message:{
+			additional_classes: 'animated'
+		},
+		on:{
+			show:function(){
+				this.addClass('bounceInDown');
+				this.trigger('afterShow.unotify');
+			},
+			hide:function(){
+				this.addClass('fadeOutUp');
+				this.trigger('afterHide.unotify');
+			},
+			afterHide:function(){
+				this.slideUp();
+			}
+		}
+	});
+});</code></pre>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h3 id="styling">
+						Styling
+					</h3>
+					<p>
+						By default uNotify uses <a href = "http://getbootstrap.com/components/#alerts">Bootstrap 3 alert classes</a>.  If you want to change that, or add new classes, just change the <a href = "#classes">classes</a> option.
+					</p>
+					<p>
+						Additionally, classes can be added to any notification using the <a href = "#additional_classes">additional_classes</a> option.
+					</p>
+					<h4>
+						Styling the wrapper
+					</h4>
+					<p>
+						If you're loathe to have inline CSS, you can add a <code>#notify-wrapper</code> entry to your CSS, and remove the uNotify.defaults.wrapper.style property.
+					</p>
+				</div>
+			</div>
+		</div><!-- .container -->
+		<a name = "bottom"></a>
+	</body>
+</html>

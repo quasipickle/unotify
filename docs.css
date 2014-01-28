@@ -1,0 +1,124 @@
+#menu {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  top: 0;
+  z-index: 2000;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+}
+#menu nav {
+  background: #333;
+  bottom: 0;
+  padding: 50px 15px 15px 15px;
+  position: absolute;
+  top: 0;
+  width: 150px;
+  transform: translateX(-150px);
+  -webkit-transform: translateX(-150px);
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+}
+#menu i {
+  left: 15px;
+  position: absolute;
+  top: 15px;
+  z-index: 1;
+}
+#menu ul a {
+  display: block;
+  line-height: 23.38px;
+}
+#menu ul ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#menu ul ul a {
+  padding-left: 15px;
+}
+#menu:hover {
+  color: white;
+  -webkit-transition: all 0.25s;
+  transition: all 0.25s;
+}
+#menu:hover nav {
+  -webkit-transition: inherit;
+  -webkit-transform: translateX(0);
+  transition: inherit;
+  transform: translateX(0);
+}
+.page-header h1 {
+  font-size: 56px;
+  font-weight: 900;
+}
+.page-header h1 p {
+  display: block;
+  font-size: 19.88px;
+  font-weight: 100;
+}
+.lead {
+  margin-bottom: 0;
+}
+.unotify-dismiss {
+  margin-left: 10px;
+}
+.unotify-dismiss.not-spaced {
+  margin-left: 0;
+}
+.alert-small {
+  font-size: 0.857em;
+  padding: 7px;
+}
+.alert-purple {
+  background-color: #eec9fe;
+  border-color: #d59eec;
+  color: #520871;
+}
+.heavy {
+  border-width: 10px;
+  font-weight: bold;
+}
+.table-flow {
+  width: auto;
+}
+.table-flow td {
+  text-align: center;
+}
+.table-flow td p:last-child {
+  margin-bottom: 0;
+}
+.sub {
+  text-align: right;
+  white-space: nowrap;
+}
+.sub i {
+  margin-left: 15px;
+}
+h5 {
+  font-weight: bold;
+  margin-bottom: 0;
+}
+/* Tweaking <code> and Prism.js styles */
+code {
+  background-color: #fdfdfd;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.3em;
+  color: ##c92c2c;
+  padding: 0.2em;
+}
+code[class*="language"] {
+  overflow: hidden;
+  display: inline;
+}
+pre[class*="language"] {
+  box-shadow: none;
+  max-height: inherit;
+}
+pre[class*="language"]:after,
+pre[class*="language"]:before {
+  display: none;
+}
+pre > code {
+  border: none;
+}

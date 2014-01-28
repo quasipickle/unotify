@@ -1,0 +1,144 @@
+@baseFontSize: 14px;
+@duration: 0.25s;
+
+#menu{
+	bottom:0;
+	left:0;
+	position:fixed;
+	top:0;
+	z-index:2000;
+
+	transition:all @duration;
+	-webkit-transition:all @duration;
+	
+	nav{
+			background:#333;
+			bottom:0;
+			padding:50px 15px 15px 15px;
+			position:absolute;
+			top:0;
+			width:150px;
+
+			transform:translateX(-150px);
+			-webkit-transform:translateX(-150px);
+
+			transition:all @duration;
+			-webkit-transition:all @duration;
+	}
+
+	i {
+		left:15px;
+		position:absolute;
+		top:15px;
+		z-index:1;
+	}
+
+
+	ul{
+		a{
+			display:block;
+			line-height:@baseFontSize * 1.67;
+		}
+
+		ul{
+			list-style-type:none;
+			margin:0;
+			padding:0;
+			a{
+				padding-left:15px;
+			}
+		}
+	}
+
+	&:hover{
+		color:white;
+
+		-webkit-transition:all @duration;
+		transition:all @duration;
+		
+		nav{
+			-webkit-transition:inherit;
+			-webkit-transform:translateX(0);
+			transition:inherit;
+			transform:translateX(0);
+		}
+	}
+}
+
+
+.page-header{
+	h1{
+		font-size:@baseFontSize * 4;
+		font-weight:900;
+
+		p{
+			display:block;
+			font-size:@baseFontSize * 1.42;
+			font-weight:100;
+		}
+	}
+}
+
+.lead{
+	margin-bottom:0;
+}
+.unotify-dismiss{ 
+	margin-left:10px; 
+	&.not-spaced{ margin-left:0; }
+}
+.alert-small{
+	font-size:0.857em;
+	padding:7px;
+}
+.alert-purple{
+	background-color:#eec9fe;
+	border-color:#d59eec;
+	color:#520871;
+}
+.heavy{
+	border-width:10px;
+	font-weight:bold;
+}
+
+.table-flow{
+	width:auto;
+	td{
+		text-align:center;
+		p:last-child{ 
+			margin-bottom:0; 
+		}
+	}
+}
+.sub{
+	text-align:right;
+	white-space: nowrap;
+
+	i{
+		margin-left:15px;
+	}
+}
+
+h5{
+	font-weight:bold;
+	margin-bottom:0;
+}
+
+/* Tweaking <code> and Prism.js styles */
+code{ 
+	background-color:#fdfdfd;
+	border:1px solid rgba(0,0,0,0.1);
+	border-radius:0.3em;
+	color: ##c92c2c;
+	padding:0.2em;
+	&[class*="language"]{
+		overflow:hidden;
+		display:inline;
+	}
+}
+pre[class*="language"]{
+	box-shadow:none;
+	max-height:inherit;
+	&:after,
+	&:before{ display:none; }
+}
+pre > code{ border:none; }
