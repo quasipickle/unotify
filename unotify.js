@@ -59,6 +59,7 @@ var uNotify = {
 			},
 			hide:function(afterHide){
 				this.slideUp(500,function(){
+					this.remove();
 					this.trigger('afterHide.unotify');
 				}.bind(this));
 			},
